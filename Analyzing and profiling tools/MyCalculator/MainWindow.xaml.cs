@@ -17,9 +17,6 @@ namespace MyCalculatorv1
 {
   public partial class MainWindow : Window, IComponentConnector
   {
-    internal TextBox tb;
-    private bool _contentLoaded;
-
     public MainWindow()
     {
       this.InitializeComponent();
@@ -47,8 +44,16 @@ namespace MyCalculatorv1
       else if (this.tb.Text.Contains("/"))
         num1 = this.tb.Text.IndexOf("/");
       string str = this.tb.Text.Substring(num1, 1);
-      double num2 = Convert.ToDouble(this.tb.Text.Substring(0, num1));
-      double num3 = Convert.ToDouble(this.tb.Text.Substring(num1 + 1, this.tb.Text.Length - num1 - 1));
+
+      //double num2 = Convert.ToDouble(this.tb.Text.Substring(0, num1));
+      //double num3 = Convert.ToDouble(this.tb.Text.Substring(num1 + 1, this.tb.Text.Length - num1 - 1));
+
+      if ( !double.TryParse(this.tb.Text.Substring(0, num1), out var num2) || 
+           !double.TryParse(this.tb.Text.Substring(num1 + 1, this.tb.Text.Length - num1 - 1), out var num3))
+      {
+          return;
+      }
+
       if (str == "+")
       {
         TextBox tb = this.tb;
